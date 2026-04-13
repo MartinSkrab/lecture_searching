@@ -43,6 +43,17 @@ def binary_search(sequence, target):
     return None
 
 
+def pattern_search(sequence, pattern):
+    positions = set()
+    for i in range(len(sequence) - len(pattern) + 1):
+        for j in range(len(pattern)):
+            if sequence[i + j] != pattern[j]:
+                break
+        else:
+            positions.add(i)
+    return positions
+
+
 def generate_sequence(size):
     return sorted([random.randint(1, size * 5) for _ in range(size)])
 
@@ -137,6 +148,16 @@ def main():
 
     print("\nSpouštím výkonnostní testy a generování grafu...")
     run_experiments_and_plot()
+
+    target_pattern = 'ATA'
+    dna_sequence = read_data('sequential.json', 'dna_sequence')
+
+    print("\nNačtená data (dna_sequence):")
+    print(dna_sequence)
+
+    result_pattern = pattern_search(dna_sequence, target_pattern)
+    print(f"Výsledek vyhledávání vzoru '{target_pattern}':")
+    print(result_pattern)
 
 
 if __name__ == "__main__":
