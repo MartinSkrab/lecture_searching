@@ -3,7 +3,10 @@ import json
 
 
 def read_data(file_name, field):
+
+
     cwd_path = Path.cwd()
+
     file_path = cwd_path / file_name
 
     allowed_fields = {'unordered_numbers', 'ordered_numbers', 'dna_sequence'}
@@ -16,51 +19,51 @@ def read_data(file_name, field):
 
 
 def linear_search(sequence, target):
-    positions = []
-    count = 0
-
-    for i in range(len(sequence)):
-        if sequence[i] == target:
-            positions.append(i)
-            count += 1
+    positions = [index for index, value in enumerate(sequence) if value == target]
+    count = len(positions)
 
     return {'positions': positions, 'count': count}
 
 
 def binary_search(sequence, target):
-    left = 0
-    right = len(sequence) - 1
+    start = 0
+    end = len(sequence) - 1
 
-    while left <= right:
-        mid = (left + right) // 2
+    while start <= end:
+        mid = start + (end - start) // 2
 
         if sequence[mid] == target:
             return mid
         elif sequence[mid] < target:
-            left = mid + 1
+            start = mid + 1
         else:
-            right = mid - 1
+            end = mid - 1
 
     return None
 
 
 def main():
+    target_number = 5
+
     sequential_data = read_data('sequential.json', 'unordered_numbers')
+
     print("Načtená data (unordered_numbers):")
     print(sequential_data)
 
-    target_number = 5
-    result = linear_search(sequential_data, target_number)
+    result_linear = linear_search(sequential_data, target_number)
+
     print(f"Výsledek vyhledávání čísla {target_number}:")
-    print(result)
+    print(result_linear)
 
-    ordered_data = read_data('sequential.json', 'ordered_numbers')
+    ordered_numbers = read_data('sequential.json', 'ordered_numbers')
+
     print("\nNačtená data (ordered_numbers):")
-    print(ordered_data)
+    print(ordered_numbers)
 
-    binary_result = binary_search(ordered_data, target_number)
+    result_binary = binary_search(ordered_numbers, target_number)
+
     print(f"Výsledek binárního vyhledávání čísla {target_number}:")
-    print(binary_result)
+    print(result_binary)
 
 
 if __name__ == "__main__":
