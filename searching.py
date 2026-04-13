@@ -17,11 +17,9 @@ def read_data(file_name, field):
             - str: If field is 'dna_sequence'.
             - None: If the field is not supported.
     """
-    # get current working directory path
     cwd_path = Path.cwd()
 
     file_path = cwd_path / file_name
-
 
     allowed_fields = {'unordered_numbers', 'ordered_numbers', 'dna_sequence'}
     if field not in allowed_fields:
@@ -33,6 +31,16 @@ def read_data(file_name, field):
         return data.get(field)
 
 
+def linear_search(sequence, target):
+    positions = []
+    count = 0
+
+    for i in range(len(sequence)):
+        if sequence[i] == target:
+            positions.append(i)
+            count += 1
+
+    return {'positions': positions, 'count': count}
 
 
 def main():
@@ -40,6 +48,12 @@ def main():
 
     print("Načtená data (unordered_numbers):")
     print(sequential_data)
+
+    target_number = 5
+    result = linear_search(sequential_data, target_number)
+
+    print(f"Výsledek vyhledávání čísla {target_number}:")
+    print(result)
 
 
 if __name__ == "__main__":
